@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.settings.ConfigureSensorActivity">
+
+    <EditText
+        android:id="@+id/newNameText"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="70dp"
+        android:ems="10"
+        android:hint="New sensor name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/measurementFreq"
+        android:layout_width="match_parent"
+        android:layout_marginTop="45dp"
+        android:layout_height="55dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/newNameText">
+
+        <TextView
+            android:id="@+id/measurementFreqText"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:text="Measurement every "
+            android:gravity="center_vertical"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/measurementFreqEditText"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:inputType="number"/>
+
+        <TextView
+            android:id="@+id/measurementFreqUnitText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="minutes"
+            android:gravity="center_vertical"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/maxTempLayout"
+        android:layout_width="match_parent"
+        android:layout_marginTop="45dp"
+        android:layout_height="55dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/measurementFreq">
+
+        <Switch
+            android:id="@+id/maxTempSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/maxTempText"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:text="Max temperature"
+            android:gravity="center_vertical"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/maxTempEditText"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal|numberSigned"/>
+
+        <TextView
+            android:id="@+id/maxTempUnitText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="°C"
+            android:gravity="center_vertical"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/minTempLayout"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_height="55dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/maxTempLayout">
+
+        <Switch
+            android:id="@+id/minTempSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/minTempText"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:text="Min temperature"
+            android:gravity="center_vertical"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/minTempEditText"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal|numberSigned"/>
+
+        <TextView
+            android:id="@+id/minTempUnitText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="°C"
+            android:gravity="center_vertical"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/maxHumidLayout"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_height="55dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/minTempLayout">
+
+        <Switch
+            android:id="@+id/maxHumidSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/maxHumidText"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:text="Max humidity"
+            android:gravity="center_vertical"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/maxHumidEditText"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:inputType="number"/>
+
+        <TextView
+            android:id="@+id/maxHumidUnitText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="%"
+            android:gravity="center_vertical"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/minHumidLayout"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_height="55dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/maxHumidLayout">
+
+        <Switch
+            android:id="@+id/minHumidSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/minHumidText"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:text="Min humidity"
+            android:gravity="center_vertical"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/minHumidEditText"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:inputType="number"/>
+
+        <TextView
+            android:id="@+id/minHumidUnitText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="%"
+            android:gravity="center_vertical"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/saveBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:onClick="saveSensorConfig"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/minHumidLayout"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

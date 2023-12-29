@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/sensorName"
+        android:layout_width="190dp"
+        android:layout_height="55dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="2dp"
+        android:gravity="center_vertical"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/temperature"
+        android:layout_width="80dp"
+        android:layout_height="55dp"
+        android:layout_alignTop="@+id/sensorName"
+        android:gravity="center_vertical"
+        android:layout_toStartOf="@+id/humidity"
+        android:textAlignment="viewEnd"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/humidity"
+        android:layout_width="70dp"
+        android:layout_height="55dp"
+        android:layout_alignTop="@+id/sensorName"
+        android:gravity="center_vertical"
+        android:layout_toStartOf="@+id/batteryLvl"
+        android:textAlignment="viewEnd"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/batteryLvl"
+        android:layout_width="70dp"
+        android:layout_height="55dp"
+        android:layout_alignTop="@+id/sensorName"
+        android:layout_alignParentEnd="true"
+        android:gravity="center_vertical"
+        android:textAlignment="viewEnd"
+        android:textSize="18sp" />
+
+</RelativeLayout>
