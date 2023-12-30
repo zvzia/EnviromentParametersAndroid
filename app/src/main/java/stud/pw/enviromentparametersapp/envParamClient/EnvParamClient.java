@@ -474,7 +474,7 @@ public class EnvParamClient {
         jsonReqObj.put("humidityMax", sensorConfigRequest.getHumidityMax());
         jsonReqObj.put("humidityMin", sensorConfigRequest.getHumidityMin());
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonReqObj, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, url, jsonReqObj, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -502,6 +502,43 @@ public class EnvParamClient {
 
         queue.add(jsonObjectRequest);
     }
+    public void setUserInfo(String name, String email, String password, final VolleyCallbackUserResponse callback) throws JSONException {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = serverUrl + "/mobile/setUserInfo";
+        JSONObject jsonReqObj = new JSONObject();
+        jsonReqObj.put("name", name);
+        jsonReqObj.put("email", email);
+        jsonReqObj.put("password", password);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, url, jsonReqObj, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Gson gson = new Gson();
+                UserResponse userResponse = gson.fromJson(response.toString(), UserResponse.class);
+                callback.onSuccess(userResponse);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("nie powiodlo sie" + error);
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                LoggedInUser loggedInUser = getLoggedInUser(sharedPreferences);
+                Map<String, String> headers = new HashMap<String, String>();
+
+                String credentials = loggedInUser.getEmail() + ":" + loggedInUser.getPassword();
+                String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+                headers.put("Authorization", "Basic " + base64EncodedCredentials);
+
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+
+
 
 
     public interface VolleyCallbackArrResponse {

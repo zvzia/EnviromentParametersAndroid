@@ -19,7 +19,7 @@ import stud.pw.enviromentparametersapp.ui.login.LoginActivity;
 
 public class AddSensorActivity extends AppCompatActivity {
     public enum State {
-        HOLD_BUTTON, CONNECT_WIFI, ENTER_CREDENTIALS, WAITING, CONFIGURED;
+        HOLD_BUTTON, CONNECT_WIFI, ENTER_CREDENTIALS, ENTER_NAME, WAITING, CONFIGURED;
     }
 
     State state;
@@ -40,6 +40,7 @@ public class AddSensorActivity extends AppCompatActivity {
         Button continueBtn = binding.continueBtn;
         EditText wifiName = binding.wifiNameTxt;
         EditText wifiPassword = binding.wifiPasswordTxt;
+        EditText sensorName = binding.sensorNameTxt;
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,13 +66,22 @@ public class AddSensorActivity extends AppCompatActivity {
                         wifiPassword.setVisibility(View.VISIBLE);
                         break;
                     case ENTER_CREDENTIALS:
-                        state = State.CONFIGURED;
-                        instructionTextWifi.setVisibility(View.INVISIBLE);
-                        instructionText.setVisibility(View.VISIBLE);
+                        state = State.ENTER_NAME;
+
+                        instructionTextWifi.setText("Enter sensor name");
                         wifiName.setVisibility(View.INVISIBLE);
                         wifiPassword.setVisibility(View.INVISIBLE);
-                        instructionText.setText(R.string.add_sensor_configured);
+                        sensorName.setVisibility(View.VISIBLE);
+
                         break;
+                    case ENTER_NAME:
+                        state = State.CONFIGURED;
+
+                        instructionTextWifi.setVisibility(View.INVISIBLE);
+                        instructionText.setVisibility(View.VISIBLE);
+                        sensorName.setVisibility(View.INVISIBLE);
+                        instructionText.setText(R.string.add_sensor_configured);
+
                     case CONFIGURED:
                         Intent myIntent = new Intent(AddSensorActivity.this, MainActivity.class);
                         startActivity(myIntent);

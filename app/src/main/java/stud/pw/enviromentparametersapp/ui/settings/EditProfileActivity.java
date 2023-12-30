@@ -2,83 +2,86 @@ package stud.pw.enviromentparametersapp.ui.settings;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.json.JSONException;
+
+import stud.pw.enviromentparametersapp.MainActivity;
 import stud.pw.enviromentparametersapp.databinding.ActivityEditProfileBinding;
+import stud.pw.enviromentparametersapp.envParamClient.EnvParamClient;
+import stud.pw.enviromentparametersapp.models.SensorConfigResponse;
+import stud.pw.enviromentparametersapp.models.UserResponse;
 
 public class EditProfileActivity extends AppCompatActivity {
 
     private ActivityEditProfileBinding binding;
+    private SharedPreferences sharedPreferences;
+    private EnvParamClient envParamClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        sharedPreferences = getSharedPreferences("userInfo", MODE_PRIVATE);
+
         binding = ActivityEditProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        envParamClient = new EnvParamClient(this);
 
         EditText name = binding.name;
         EditText email = binding.username;
         EditText password = binding.password;
         EditText passwordRetyped = binding.retypedPassword;
-        Button nameBtn = binding.nameBtn;
-        Button emailBtn = binding.emailBtn;
-        Button passwordBtn = binding.passwordBtn;
+        Button save = binding.save;
+        Button cancel = binding.cancel;
 
-        //TODO get user info
-        name.setText("imie");
-        email.setText("email");
-        password.setText("haslo");
+        name.setText(sharedPreferences.getString("username", ""));
+        email.setText(sharedPreferences.getString("email", ""));
+        password.setText(sharedPreferences.getString("password", ""));
 
-        nameBtn.setOnClickListener(new View.OnClickListener() {
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if(nameBtn.getText().toString().equals("Edit")){
-                    name.setEnabled(true);
-                    nameBtn.setText("Save");
-                }else{
-                    name.setEnabled(false);
-                    nameBtn.setText("Edit");
-                    //TODO send request
+            public void onClick(View view) {
+                try {
+                    envParamClient.setUserInfo(name.getText().toString(), email.getText().toString(), password.getText().toString(), new EnvParamClient.VolleyCallbackUserResponse() {
+                        @Override
+                        public void onSuccess(UserResponse result) {
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("username", result.getUsername());
+                            editor.putString("email", result.getEmail());
+                            editor.putString("password", result.getPassword());
+                            editor.apply();
+
+                            name.setText(sharedPreferences.getString("username", ""));
+                            email.setText(sharedPreferences.getString("email", ""));
+                            password.setText(sharedPreferences.getString("password", ""));
+
+                            Intent myIntent = new Intent(EditProfileActivity.this, MainActivity.class);
+                            startActivity(myIntent);
+                            finish();
+                        }
+                    });
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
                 }
             }
         });
 
-        emailBtn.setOnClickListener(new View.OnClickListener() {
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if(emailBtn.getText().toString().equals("Edit")){
-                    email.setEnabled(true);
-                    emailBtn.setText("Save");
-                }else{
-                    email.setEnabled(false);
-                    emailBtn.setText("Edit");
-                    //TODO send request
-                }
+            public void onClick(View view) {
+                Intent myIntent = new Intent(EditProfileActivity.this, MainActivity.class);
+                startActivity(myIntent);
+
+                finish();
             }
         });
 
-        passwordBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(passwordBtn.getText().toString().equals("Edit")){
-                    password.setEnabled(true);
-                    passwordRetyped.setEnabled(true);
-                    passwordRetyped.setVisibility(View.VISIBLE);
-                    passwordBtn.setText("Save");
-                }else{
-                    password.setEnabled(false);
-                    passwordRetyped.setEnabled(true);
-                    passwordRetyped.setVisibility(View.INVISIBLE);
-                    passwordBtn.setText("Edit");
-                    //TODO send request
-                }
-            }
-        });
     }
-
 }
