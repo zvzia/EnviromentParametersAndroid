@@ -101,7 +101,11 @@ public class SensorActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(BatteryLevelResponse result) {
                     TextView batteryLvl = findViewById(R.id.batteryLvlText);
-                    batteryLvl.setText("Battery level: " + result.getBatteryLvl() + "%");
+                    if(result.getBatteryLvl() == null){
+                        batteryLvl.setVisibility(View.INVISIBLE);
+                    }else{
+                        batteryLvl.setText("Battery level: " + result.getBatteryLvl() + "%");
+                    }
                 }
 
             });

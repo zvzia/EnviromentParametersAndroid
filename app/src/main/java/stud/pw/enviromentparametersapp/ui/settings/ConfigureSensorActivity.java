@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -23,6 +24,7 @@ import stud.pw.enviromentparametersapp.envParamClient.EnvParamClient;
 import stud.pw.enviromentparametersapp.models.ArrayResponse;
 import stud.pw.enviromentparametersapp.models.SensorConfigRequest;
 import stud.pw.enviromentparametersapp.models.SensorConfigResponse;
+import stud.pw.enviromentparametersapp.models.StringResponse;
 
 public class ConfigureSensorActivity extends AppCompatActivity {
 
@@ -40,7 +42,6 @@ public class ConfigureSensorActivity extends AppCompatActivity {
         binding = ActivityConfigureSensorBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setContentView(R.layout.activity_configure_sensor);
 
         Intent mIntent = getIntent();
         sensorId = mIntent.getIntExtra("sensorId", 0);
@@ -64,7 +65,7 @@ public class ConfigureSensorActivity extends AppCompatActivity {
                     setTitle("Configure "+ result.getSensorName());
 
                     newNameText.setText(result.getSensorName());
-                    measurementFreqEditText.setText(result.getMeasurementFreq());
+                    measurementFreqEditText.setText(String.valueOf(result.getMeasurementFreq()));
 
                     if(result.getTemperatureMax() == null){
                         maxTempSwitch.setChecked(false);
@@ -119,13 +120,13 @@ public class ConfigureSensorActivity extends AppCompatActivity {
         sensorConfigRequest.setMeasurementFreq(Integer.valueOf(measurementFreqEditText.getText().toString()));
 
         if(maxTempSwitch.isChecked()){
-            sensorConfigRequest.setTemperatureMax(Float.valueOf(maxTempEditText.getText().toString()));
+            sensorConfigRequest.setTemperatureMax(Double.valueOf(maxTempEditText.getText().toString()));
         }else{
             sensorConfigRequest.setTemperatureMax(null);
         }
 
         if(minTempSwitch.isChecked()){
-            sensorConfigRequest.setTemperatureMin(Float.valueOf(minTempEditText.getText().toString()));
+            sensorConfigRequest.setTemperatureMin(Double.valueOf(minTempEditText.getText().toString()));
         }else{
             sensorConfigRequest.setTemperatureMin(null);
         }
@@ -145,7 +146,12 @@ public class ConfigureSensorActivity extends AppCompatActivity {
 
         EnvParamClient envParamClient = new EnvParamClient(this);
         try {
-            envParamClient.setSensorConfig(sensorConfigRequest);
+            envParamClient.setSensorConfig(sensorConfigRequest, new EnvParamClient.VolleyCallbackStringResponse() {
+                @Override
+                public void onSuccess(StringResponse result) {
+                    Toast.makeText(getApplicationContext(), "Changes saved", Toast.LENGTH_SHORT).show();
+                }
+            });
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

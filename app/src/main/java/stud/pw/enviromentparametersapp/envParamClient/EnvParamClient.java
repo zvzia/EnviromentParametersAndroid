@@ -461,7 +461,7 @@ public class EnvParamClient {
         queue.add(jsonObjectRequest);
     }
 
-    public void setSensorConfig(SensorConfigRequest sensorConfigRequest) throws JSONException {
+    public void setSensorConfig(SensorConfigRequest sensorConfigRequest, final VolleyCallbackStringResponse callback) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(context);
         String url = serverUrl + "/mobile/setSensorConfig";
 
@@ -478,7 +478,9 @@ public class EnvParamClient {
 
             @Override
             public void onResponse(JSONObject response) {
-
+                Gson gson = new Gson();
+                StringResponse stringResponse = gson.fromJson(response.toString(), StringResponse.class);
+                callback.onSuccess(stringResponse);
             }
         }, new Response.ErrorListener() {
             @Override

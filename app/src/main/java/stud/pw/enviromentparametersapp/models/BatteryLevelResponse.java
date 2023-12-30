@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class BatteryLevelResponse {
     int sensorId;
-    int batteryLvl;
+    Integer batteryLvl;
 
     public int getSensorId() {
         return sensorId;
@@ -14,11 +14,11 @@ public class BatteryLevelResponse {
         this.sensorId = sensorId;
     }
 
-    public int getBatteryLvl() {
+    public Integer getBatteryLvl() {
         return batteryLvl;
     }
 
-    public void setBatteryLvl(int batteryLvl) {
+    public void setBatteryLvl(Integer batteryLvl) {
         this.batteryLvl = batteryLvl;
     }
 
@@ -27,7 +27,7 @@ public class BatteryLevelResponse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BatteryLevelResponse that = (BatteryLevelResponse) o;
-        return sensorId == that.sensorId && batteryLvl == that.batteryLvl;
+        return sensorId == that.sensorId && Objects.equals(batteryLvl, that.batteryLvl);
     }
 
     @Override
