@@ -2,9 +2,15 @@ package stud.pw.enviromentparametersapp.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.json.JSONException;
 
 import stud.pw.enviromentparametersapp.data.model.LoggedInUser;
 import stud.pw.enviromentparametersapp.envParamClient.EnvParamClient;
+import stud.pw.enviromentparametersapp.models.StringResponse;
 import stud.pw.enviromentparametersapp.models.UserResponse;
 
 import java.io.IOException;
@@ -34,6 +40,21 @@ public class LoginDataSource {
                         editor.putString("email", loggedUser.getEmail());
                         editor.putString("password", loggedUser.getPassword());
                         editor.apply();
+                    }
+
+                    String msgToken = sharedPreferences.getString("msg-token", "");
+
+                    if (!msgToken.equals("")){
+                        try {
+                            new EnvParamClient(context).setMessageToken(loggedUser.getEmail(), msgToken, new EnvParamClient.VolleyCallbackStringResponse() {
+                                @Override
+                                public void onSuccess(StringResponse result) {
+                                    Log.d("TAG", "token added");
+                                }
+                            });
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
 
                     callback.onLoginSuccess(loggedUser);

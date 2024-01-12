@@ -42,7 +42,6 @@ public class ConfigureSensorActivity extends AppCompatActivity {
         binding = ActivityConfigureSensorBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
         Intent mIntent = getIntent();
         sensorId = mIntent.getIntExtra("sensorId", 0);
 

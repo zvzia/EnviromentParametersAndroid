@@ -2,6 +2,7 @@ package stud.pw.enviromentparametersapp.ui.login;
 
 import android.app.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -23,6 +24,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import stud.pw.enviromentparametersapp.MainActivity;
 import stud.pw.enviromentparametersapp.R;
@@ -55,6 +60,18 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = binding.loginBtn;
         final Button registerButton = binding.registerBtn;
         final ProgressBar loadingProgressBar = binding.loading;
+
+        FirebaseMessaging.getInstance().subscribeToTopic("notifications")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "Done";
+                        if (!task.isSuccessful()) {
+                            msg = "Failed";
+                        }
+
+                    }
+                });
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override

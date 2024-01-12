@@ -32,6 +32,8 @@ public class EditProfileActivity extends AppCompatActivity {
         binding = ActivityEditProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        setTitle("Edit profile");
+
         envParamClient = new EnvParamClient(this);
 
         EditText name = binding.name;
@@ -40,6 +42,7 @@ public class EditProfileActivity extends AppCompatActivity {
         EditText passwordRetyped = binding.retypedPassword;
         Button save = binding.save;
         Button cancel = binding.cancel;
+        Button editPasswordBtn = binding.editPasswordBtn;
 
         name.setText(sharedPreferences.getString("username", ""));
         email.setText(sharedPreferences.getString("email", ""));
@@ -80,6 +83,14 @@ public class EditProfileActivity extends AppCompatActivity {
                 startActivity(myIntent);
 
                 finish();
+            }
+        });
+
+        editPasswordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                password.setEnabled(true);
+                passwordRetyped.setVisibility(View.VISIBLE);
             }
         });
 

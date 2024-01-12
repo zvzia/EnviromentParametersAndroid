@@ -540,6 +540,76 @@ public class EnvParamClient {
         queue.add(jsonObjectRequest);
     }
 
+    public void setMessageToken(String email, String token, final VolleyCallbackStringResponse callback) throws JSONException {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = serverUrl + "/mobile/setUserMsgToken";
+        JSONObject jsonReqObj = new JSONObject();
+        jsonReqObj.put("messageToken", token);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, url, jsonReqObj, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Gson gson = new Gson();
+                StringResponse stringResponse = gson.fromJson(response.toString(), StringResponse.class);
+                callback.onSuccess(stringResponse);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("nie powiodlo sie" + error);
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                LoggedInUser loggedInUser = getLoggedInUser(sharedPreferences);
+                Map<String, String> headers = new HashMap<String, String>();
+
+                String credentials = loggedInUser.getEmail() + ":" + loggedInUser.getPassword();
+                String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+                headers.put("Authorization", "Basic " + base64EncodedCredentials);
+
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+
+    public void addSensor(String name, String token, final VolleyCallbackStringResponse callback) throws JSONException {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = serverUrl + "/mobile/addSensor";
+        JSONObject jsonReqObj = new JSONObject();
+        jsonReqObj.put("name", name);
+        jsonReqObj.put("token", token);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonReqObj, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Gson gson = new Gson();
+                StringResponse stringResponse = gson.fromJson(response.toString(), StringResponse.class);
+                callback.onSuccess(stringResponse);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("nie powiodlo sie" + error);
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                LoggedInUser loggedInUser = getLoggedInUser(sharedPreferences);
+                Map<String, String> headers = new HashMap<String, String>();
+
+                String credentials = loggedInUser.getEmail() + ":" + loggedInUser.getPassword();
+                String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+                headers.put("Authorization", "Basic " + base64EncodedCredentials);
+
+                return headers;
+            }
+        };
+
+        queue.add(jsonObjectRequest);
+    }
+
 
 
 

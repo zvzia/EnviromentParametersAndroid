@@ -19,7 +19,7 @@ import stud.pw.enviromentparametersapp.ui.login.LoginActivity;
 
 public class AddSensorActivity extends AppCompatActivity {
     public enum State {
-        HOLD_BUTTON, CONNECT_WIFI, ENTER_CREDENTIALS, ENTER_NAME, WAITING, CONFIGURED;
+        HOLD_BUTTON, CONNECT_WIFI, ENTER_CREDENTIALS, ENTER_NAME, CONNECT_INTERNET,  WAITING, CONFIGURED;
     }
 
     State state;
@@ -32,6 +32,8 @@ public class AddSensorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAddSensorBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        setTitle("Add sensor");
 
         //setContentView(R.layout.activity_edit_profile);
 
@@ -75,12 +77,22 @@ public class AddSensorActivity extends AppCompatActivity {
 
                         break;
                     case ENTER_NAME:
+                        state = State.CONNECT_INTERNET;
+
+                        instructionTextWifi.setVisibility(View.INVISIBLE);
+                        instructionText.setVisibility(View.VISIBLE);
+                        sensorName.setVisibility(View.INVISIBLE);
+                        instructionText.setText(R.string.add_sensor_connect_internet);
+                        break;
+
+                    case CONNECT_INTERNET:
                         state = State.CONFIGURED;
 
                         instructionTextWifi.setVisibility(View.INVISIBLE);
                         instructionText.setVisibility(View.VISIBLE);
                         sensorName.setVisibility(View.INVISIBLE);
                         instructionText.setText(R.string.add_sensor_configured);
+                        break;
 
                     case CONFIGURED:
                         Intent myIntent = new Intent(AddSensorActivity.this, MainActivity.class);

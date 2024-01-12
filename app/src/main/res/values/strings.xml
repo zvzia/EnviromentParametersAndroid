@@ -23,7 +23,8 @@
     <string name="register_failed">"Register failed"</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="add_sensor_hold_button">Hold the button on your sensor for 5 seconds until the light start flashing green</string>
-    <string name="add_sensor_connect_wifi">Connect to Wi-Fi named "sensor_wifi</string>
+    <string name="add_sensor_connect_wifi">Connect to Wi-Fi named "sensor_wifi"</string>
     <string name="add_sensor_enter_wifi">Enter your Wi-Fi credentials</string>
+    <string name="add_sensor_connect_internet">Disconnect from sensor Wi-Fi and connect to the internet</string>
     <string name="add_sensor_configured">Sensor was added to your account</string>
 </resources>
