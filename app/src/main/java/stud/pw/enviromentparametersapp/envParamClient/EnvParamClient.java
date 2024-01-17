@@ -56,8 +56,8 @@ import com.google.gson.Gson;
 public class EnvParamClient {
 
     Context context;
-    //String serverUrl="https://env-parrameters-server.calmstone-fa48359e.westeurope.azurecontainerapps.io";
-    String serverUrl = "http://10.0.2.2:8080";
+    String serverUrl="https://env-parameters-server-v2.wonderfulisland-a49bd055.westeurope.azurecontainerapps.io";
+    //String serverUrl = "http://10.0.2.2:8080";
     SharedPreferences sharedPreferences;
 
     public EnvParamClient(Context context) {
@@ -67,7 +67,7 @@ public class EnvParamClient {
 
     public void login(String email, String password, final VolleyCallbackUserResponse callback) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(context);
-        String url = serverUrl + "/mobile/login";
+        String url = serverUrl + "/mobile/getUserData";
         JSONObject jsonReqObj = new JSONObject();
         jsonReqObj.put("email", email);
         jsonReqObj.put("password", password);
@@ -341,7 +341,7 @@ public class EnvParamClient {
     public void getLastUpdateDateString() throws JSONException {
 
         RequestQueue queue = Volley.newRequestQueue(context);
-        String url = serverUrl + "/mobile/getLastUpdateDateString";
+        String url = serverUrl + "/mobile/getLastUpdateDate";
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
